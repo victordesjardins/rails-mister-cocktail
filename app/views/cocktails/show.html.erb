@@ -1,0 +1,28 @@
+<div class="banner" style="background-image: linear-gradient(-225deg, rgba(0,101,168,0.6) 0%, rgba(0,36,61,0.6) 50%), url('https://www.delyonenlarge.com/wp-content/uploads/2013/10/recette-e7517-cocktail-blue-lagoon.jpg');">
+  <div class="banner-content">
+    <h1><%= @cocktail.name %></h1>
+  </div>
+</div>
+<div class="container">
+  <div class="cocktail-details">
+    <div class="description">
+
+    </div>
+    <div class="ingredients">
+
+    </div>
+  </div>
+</div>
+
+
+  <%= link_to "Add a dose", new_cocktail_dose_path(@cocktail) %>
+  <ul>
+    <% @cocktail.doses.each do |dose| %>
+      <li><%= dose.description %> <%= dose.ingredient.name %><%= link_to "Delete", dose_path,
+        method: :delete,
+        data: { confirm: "Are you sure?" } %> </li>
+    <% end %>
+  </ul>
+  <%= link_to "Back to list of cocktails", cocktails_path %>
+
+

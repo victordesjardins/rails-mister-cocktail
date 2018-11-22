@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row">
+  <% @cocktails.each do |cocktail| %>
+    <div class="col-xs-12 col-sm-4 card-link">
+      <%= link_to cocktail_path(cocktail) do %>
+        <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('https://www.delyonenlarge.com/wp-content/uploads/2013/10/recette-e7517-cocktail-blue-lagoon.jpg');">
+          <div class="card-description">
+            <h2><%= cocktail.name %></h2>
+            <% if cocktail.doses.count == 0 %>
+              <p>Complète ton cocktail</p>
+            <% else %>
+              <p><%= cocktail.doses.count %> ingrédients</p>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+  </div>
+</div>
+
