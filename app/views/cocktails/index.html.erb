@@ -3,7 +3,11 @@
   <% @cocktails.each do |cocktail| %>
     <div class="col-xs-12 col-sm-4 card-link">
       <%= link_to cocktail_path(cocktail) do %>
-        <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('https://www.delyonenlarge.com/wp-content/uploads/2013/10/recette-e7517-cocktail-blue-lagoon.jpg');">
+        <% if cocktail[:photo].nil? %>
+        <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('https://i.pinimg.com/originals/fd/e6/6a/fde66a99c830896e4a376a08dbee033b.jpg');">
+        <% else %>
+        <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('<%= cl_image_path cocktail.photo, crop: :fill%>');">
+        <% end %>
           <div class="card-description">
             <h2><%= cocktail.name %></h2>
             <% if cocktail.doses.count == 0 %>
@@ -19,3 +23,26 @@
   </div>
 </div>
 
+<!-- Modal -->
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">New Cocktail</h4>
+      </div>
+      <div class="modal-body">
+          <%= simple_form_for @cocktail, class: "form-group" do |f| %>
+            <%= f.input :name %>
+            <%= f.input :description %>
+            <%= f.input :photo %>
+            <%= f.input :photo_cache, as: :hidden %>
+            <div class="modal-footer">
+            <%= f.submit "add a coktail", class: "btn btn-primary" %>
+            </div>
+            <% end %>
+      </div>
+    </div>
+  </div>
+</div>

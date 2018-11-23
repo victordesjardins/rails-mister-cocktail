@@ -1,32 +1,59 @@
-<div class="banner" style="background-image: linear-gradient(-225deg, rgba(0,101,168,0.6) 0%, rgba(0,36,61,0.6) 50%), url('https://www.delyonenlarge.com/wp-content/uploads/2013/10/recette-e7517-cocktail-blue-lagoon.jpg');">
+<% if @cocktail[:photo].nil? %>
+<div class="banner" style="background-image: linear-gradient(-225deg, rgba(0,101,168,0.6) 0%, rgba(0,36,61,0.6) 50%), url('https://i.pinimg.com/originals/fd/e6/6a/fde66a99c830896e4a376a08dbee033b.jpg')">
+<% else %>
+<div class="banner" style="background-image: linear-gradient(-225deg, rgba(0,101,168,0.6) 0%, rgba(0,36,61,0.6) 50%), url('<%= cl_image_path @cocktail.photo, crop: :fill%>')">
+<% end %>
   <div class="banner-content">
     <h1><%= @cocktail.name %></h1>
   </div>
 </div>
+
 <div class="container">
   <div class="cocktail-details">
     <div class="description">
-
+      <h3>Description</h3>
+      <p><%= @cocktail.description %></p>
     </div>
     <div class="ingredients">
-
+      <h3>Ingrédients</h3>
+      <ul class="dose-list">
+        <% @cocktail.doses.each do |dose| %>
+          <li><em><%= dose.ingredient.name %></em> - <%= dose.description %> <%= link_to dose_path,
+            method: :delete,
+            data: { confirm: "Are you sure?" } do %>
+              <i class="fas fa-trash-alt"></i>
+            <% end %></li>
+        <% end %>
+        <button type="button" class="btn btn-treehouse" id="add-ingredient"data-toggle="modal" data-target="#ingredientModal" data-whatever="">Add an ingredient</button>
+      </ul>
     </div>
   </div>
+  <%= link_to cocktails_path do %>
+    <button class="btn-treehouse">Back to list of cocktails</button>
+  <% end %>
 </div>
 
 
-  <%= link_to "Add a dose", new_cocktail_dose_path(@cocktail) %>
-<% if @cocktail.photo %>
-<%= cl_image_tag @article.photo, height: 300, width: 400, crop: :fill %>
-<% end %>
+<!-- modal -->
 
-  <ul>
-    <% @cocktail.doses.each do |dose| %>
-      <li><%= dose.description %> <%= dose.ingredient.name %><%= link_to "Delete", dose_path,
-        method: :delete,
-        data: { confirm: "Are you sure?" } %> </li>
-    <% end %>
-  </ul>
-  <%= link_to "Back to list of cocktails", cocktails_path %>
+<div class="modal fade" id="ingredientModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">New ingredient</h4>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for [@cocktail, @dose] do |f| %>
+          <%= f.input :description %>
+          <%= f.association :ingredient, prompt: "Choose an ingredient" %>
+          <div class="modal-footer">
+            <%= f.submit "add a dose", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
 
 
