@@ -16,6 +16,10 @@
 
 
   <%= link_to "Add a dose", new_cocktail_dose_path(@cocktail) %>
+<% if @cocktail.photo %>
+<%= cl_image_tag @article.photo, height: 300, width: 400, crop: :fill %>
+<% end %>
+
   <ul>
     <% @cocktail.doses.each do |dose| %>
       <li><%= dose.description %> <%= dose.ingredient.name %><%= link_to "Delete", dose_path,
