@@ -39,3 +39,14 @@
 .card-link:hover {
   opacity: 0.8;
 }
+
+.card-link {
+  position: relative;
+}
+
+.delete-link {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  opacity: 0.6;
+}

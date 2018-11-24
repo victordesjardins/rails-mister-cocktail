@@ -1,24 +1,24 @@
 class CocktailsController < ApplicationController
-  before_action :set_cocktail, only: [:show]
+  before_action :set_cocktail, only: [:show, :destroy]
 
-def index
-    cocktail_names = Cocktail.all.map {|cocktail| cocktail[:name]}
-    if params[:query].nil?
-      @cocktails = Cocktail.all
-    elsif cocktail_names.include?(params[:query])
-      @cocktails = Cocktail.where(name: params[:query])
-    else
-      @cocktails_all = Cocktail.all
-      @cocktails = []
-      @cocktails_all.each do |cocktail|
-        cocktail.ingredients.each do |ingredient|
-          if ingredient[:name] == params[:query]
-          @cocktails << cocktail
+  def index
+      cocktail_names = Cocktail.all.map {|cocktail| cocktail[:name]}
+      if params[:query].nil? || params[:query] == ""
+        @cocktails = Cocktail.all
+      elsif cocktail_names.include?(params[:query])
+        @cocktails = Cocktail.where("name LIKE ?", "%#{params[:query]}%")
+      else
+        @cocktails_all = Cocktail.all
+        @cocktails = []
+        @cocktails_all.each do |cocktail|
+          cocktail.ingredients.each do |ingredient|
+            if ingredient[:name] == params[:query]
+            @cocktails << cocktail
+            end
           end
         end
       end
-    end
-    @cocktail = Cocktail.new
+      @cocktail = Cocktail.new
   end
 
   def show
@@ -36,6 +36,11 @@ def index
     else
       render :new
     end
+  end
+
+  def destroy
+    @cocktail.destroy
+    redirect_to cocktails_path
   end
 
   private

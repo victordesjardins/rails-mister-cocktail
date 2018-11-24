@@ -32,3 +32,19 @@
     padding: 7px 10px;
     margin-top: 10px;
   }
+
+.delete-button {
+  display: block;
+  font-size: 30px;
+  text-decoration: none;
+  transform: rotate(45deg);
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  border-radius: 50px;
+}
+
+.delete-button:hover {
+  opacity: 1;
+  text-decoration: none;
+}

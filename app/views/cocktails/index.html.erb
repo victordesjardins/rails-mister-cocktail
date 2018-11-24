@@ -18,6 +18,13 @@
           </div>
         </div>
       <% end %>
+      <div class="delete-link">
+        <%= link_to cocktail_path(cocktail),
+            method: :delete,
+            data: { confirm: "Are you sure?" } do %>
+            <button class="delete-button">     +</button>
+        <% end %>
+      </div>
     </div>
   <% end %>
   </div>
