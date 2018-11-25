@@ -15,7 +15,7 @@
 .btn-treehouse {
   color: white;
   padding: 10px 15px;
-  border-radius: 1px;
+  border-radius: 10px;
   font-weight: normal;
   background: #2F4550;
   transition: background 0.3s ease;
@@ -34,17 +34,16 @@
   }
 
 .delete-button {
-  display: block;
-  font-size: 30px;
-  text-decoration: none;
+  padding: 0px;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
   transform: rotate(45deg);
-  width: 40px;
-  height: 40px;
-  align-items: center;
-  border-radius: 50px;
+  color: #888d93;
+  background-color: white;
 }
 
 .delete-button:hover {
-  opacity: 1;
-  text-decoration: none;
+  opacity: 0.9;
+  color: red;
 }

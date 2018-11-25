@@ -2,6 +2,7 @@ class CocktailsController < ApplicationController
   before_action :set_cocktail, only: [:show, :destroy]
 
   def index
+      @home_page = true
       cocktail_names = Cocktail.all.map {|cocktail| cocktail[:name]}
       if params[:query].nil? || params[:query] == ""
         @cocktails = Cocktail.all
@@ -18,15 +19,13 @@ class CocktailsController < ApplicationController
           end
         end
       end
+      @random_cocktail = @cocktails[rand(@cocktails.length)]
       @cocktail = Cocktail.new
+      # @random_cocktail = @cocktails[rand(@cocktails.length - 1)]
   end
 
   def show
     @dose = Dose.new
-  end
-
-  def new
-    @cocktail = Cocktail.new
   end
 
   def create

@@ -1,4 +1,30 @@
+<div class="navbar-wagon">
+  <button type="button" class="btn btn-medium" data-toggle="modal" data-target="#myModal">New Cocktail</button>
+  <span id="banner-typed-text"></span>
+  <form action="/cocktails">
+  <input type="text" placeholder="Search for a cocktail or an ingredient..." name="query" class="search-form">
+  <input type="submit" value="filter">
+  </form>
+</div>
+
+
 <div class="container">
+  <div class="random-card-link">
+    <%= link_to cocktail_path(@random_cocktail) do %>
+      <% if @random_cocktail[:photo] == nil %>
+        <div class="banner" id="index-banner" style="background-image: linear-gradient(-225deg, rgba(0,101,168,0.6) 0%, rgba(0,36,61,0.6) 50%), url('https://i.pinimg.com/originals/fd/e6/6a/fde66a99c830896e4a376a08dbee033b.jpg')">
+      <% else %>
+        <div class="banner" id="index-banner" style="background-image: linear-gradient(-225deg, rgba(0,101,168,0.6) 0%, rgba(0,36,61,0.6) 50%), url('<%= cl_image_path @random_cocktail.photo, crop: :fill%>')">
+      <% end %>
+      <div class="banner-content">
+        <h1><%= @random_cocktail.name %></h1>
+      </div>
+    </div>
+    <% end %>
+  </div>
+  <h2 id="index-title">Your cocktail's list</h2>
+  <div class="index-title">
+  </div>
   <div class="row">
   <% @cocktails.each do |cocktail| %>
     <div class="col-xs-12 col-sm-4 card-link">
@@ -22,7 +48,7 @@
         <%= link_to cocktail_path(cocktail),
             method: :delete,
             data: { confirm: "Are you sure?" } do %>
-            <button class="delete-button">     +</button>
+            <button class="delete-button">+</button>
         <% end %>
       </div>
     </div>
